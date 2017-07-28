@@ -18,6 +18,8 @@ import com.estimote.sdk.Beacon;
 import com.estimote.sdk.BeaconManager;
 import com.estimote.sdk.Region;
 import com.tanda.hackathon.acss.axis.Activities.SplashActivity;
+import com.tanda.hackathon.acss.axis.Models.Routes;
+import com.tanda.hackathon.acss.axis.Models.User;
 
 import java.util.HashMap;
 import java.util.List;
@@ -31,12 +33,17 @@ import java.util.UUID;
 public class BeaconRangingApp extends Application {
     private BeaconManager beaconManager;
     private RequestQueue queue;
+    private Routes routes = new Routes();
 
     @Override
     public void onCreate() {
         super.onCreate();
         queue = Volley.newRequestQueue(getApplicationContext());
         beaconManager = new BeaconManager(getApplicationContext());
+
+        //
+
+        //Ranging, checkin shitssss
         beaconManager.connect(new BeaconManager.ServiceReadyCallback(){
             @Override
             public void onServiceReady() {
@@ -53,7 +60,7 @@ public class BeaconRangingApp extends Application {
                         showNotification(
                                 "AXIS TANDA HACKATHON",
                                 "TIME TO G BOIS THIS IS CLOCKIN BITCHES");
-                        testPing(queue);
+                        routes.testPing(queue);
                     }
                     @Override
                     public void onExitedRegion(Region region) {
@@ -86,32 +93,4 @@ public class BeaconRangingApp extends Application {
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(1, notification);
     }
-
-    public void testPing(RequestQueue rq) {
-        String testUrl = "http://172.16.1.154:8000/api/tanda/clockin";
-        StringRequest testReq = new StringRequest(Request.Method.POST, testUrl, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                // response
-                Log.d("Response", response);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                // error
-                Log.d("Error.Response", error.toString());
-            }
-        }) {
-
-            @Override
-            protected Map<String, String> getParams()
-            {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("name", "Shitbols");
-
-                return params;
-            }
-        };
-        rq.add(testReq);
-    };
 }
