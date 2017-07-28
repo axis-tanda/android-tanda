@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import com.tanda.hackathon.acss.axis.R;
 
 public class LoginActivity extends AppCompatActivity {
-    private ImageView backButton;
     private EditText usernameForm;
     private EditText passwordForm;
     private Button submitButton;
@@ -19,8 +18,6 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-        backButton = (ImageView) findViewById(R.id.backBtn);
         usernameForm = (EditText) findViewById(R.id.emailEditText);
         passwordForm = (EditText) findViewById(R.id.passwordEditText);
         submitButton = (Button) findViewById(R.id.submitButton);
