@@ -6,24 +6,16 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.estimote.sdk.Beacon;
 import com.estimote.sdk.BeaconManager;
 import com.estimote.sdk.Region;
-import com.tanda.hackathon.acss.axis.Activities.SplashActivity;
+import com.tanda.hackathon.acss.axis.Activities.MainActivity;
 import com.tanda.hackathon.acss.axis.Models.Routes;
-import com.tanda.hackathon.acss.axis.Models.User;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -77,7 +69,7 @@ public class BeaconRangingApp extends Application {
     }
 
     public void showNotification(String title, String message) {
-        Intent notifyIntent = new Intent(this, SplashActivity.class);
+        Intent notifyIntent = new Intent(this, MainActivity.class);
         notifyIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivities(this, 0,
                 new Intent[] { notifyIntent }, PendingIntent.FLAG_UPDATE_CURRENT);

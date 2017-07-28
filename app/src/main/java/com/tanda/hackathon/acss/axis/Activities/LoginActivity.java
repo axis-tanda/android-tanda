@@ -5,8 +5,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 
+import com.tanda.hackathon.acss.axis.Models.User;
 import com.tanda.hackathon.acss.axis.R;
 
 public class LoginActivity extends AppCompatActivity {
@@ -24,9 +24,11 @@ public class LoginActivity extends AppCompatActivity {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                SplashActivity.currentUser
+                MainActivity.currentUser = new User();
                 finish();
-                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+
+                MainActivity.navigation.findViewById(R.id.navigation_clockin).performClick();
+                overridePendingTransition(R.anim.slide_up, R.anim.slide_down);
             }
         });
     }
