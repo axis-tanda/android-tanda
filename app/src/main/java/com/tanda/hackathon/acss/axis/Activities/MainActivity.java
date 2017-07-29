@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,23 +16,21 @@ import android.widget.TextView;
 
 import com.estimote.sdk.SystemRequirementsChecker;
 import com.tanda.hackathon.acss.axis.Fragments.ClockinFragment;
+import com.tanda.hackathon.acss.axis.Fragments.MeetingFragment;
 import com.tanda.hackathon.acss.axis.Models.User;
 import com.tanda.hackathon.acss.axis.R;
 
 import java.text.DateFormat;
 import java.util.Date;
 
-public class MainActivity extends AppCompatActivity implements ClockinFragment.OnClockinInteractionListener{
+public class MainActivity extends AppCompatActivity implements ClockinFragment.OnClockinInteractionListener, MeetingFragment.OnMeetingListener{
     public static User currentUser = null;
-
+    private Boolean firstLoad = true;
     private TextView dateTitle;
     private TextView timeTitle;
     private TextView userTitle;
     private FloatingActionButton fab;
     public static BottomNavigationView navigation;
-    private FrameLayout fragmentContainer;
-    private ClockinFragment clockIn;
-
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -50,6 +49,9 @@ public class MainActivity extends AppCompatActivity implements ClockinFragment.O
                     userTitle.setText(nameString);
                     fab.setImageResource(android.R.drawable.ic_menu_manage);
 
+                    if(firstLoad) {
+                        firstLoad = false;
+                    } else changeFragment(0);
                     return true;
                 case R.id.navigation_rooms:
                     userTitle.setVisibility(View.INVISIBLE);
@@ -59,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements ClockinFragment.O
                     dateTitle.setText(dateString);
                     timeTitle.setText(timeString);
                     fab.setImageResource(android.R.drawable.ic_menu_my_calendar);
-
+                    changeFragment(1);
                     return true;
             }
             return false;
@@ -79,26 +81,9 @@ public class MainActivity extends AppCompatActivity implements ClockinFragment.O
         navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        if (findViewById(R.id.frameLayout) != null) {
-
-            // However, if we're being restored from a previous state,
-            // then we don't need to do anything and should return or else
-            // we could end up with overlapping fragments.
-            if (savedInstanceState != null) {
-                return;
-            }
-
-            // Create a new Fragment to be placed in the activity layout
-            ClockinFragment firstFragment = new ClockinFragment();
-
-            // In case this activity was started with special instructions from an
-            // Intent, pass the Intent's extras to the fragment as arguments
-            firstFragment.setArguments(getIntent().getExtras());
-
-            // Add the fragment to the 'fragment_container' FrameLayout
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.frameLayout, firstFragment).commit();
-        }
+        ClockinFragment firstFragment = new ClockinFragment();
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.frameLayout, firstFragment).commit();
 
         //Add persistence here
         if (currentUser == null) {
@@ -116,7 +101,22 @@ public class MainActivity extends AppCompatActivity implements ClockinFragment.O
         SystemRequirementsChecker.checkWithDefaultDialogs(this);
     }
 
-    public void onClockinInteraction(Uri uri){
+    public void changeFragment(int fragment) {
+        Fragment selectedFragment = null;
+        switch(fragment) {
+            case 0:
+                selectedFragment = ClockinFragment.newInstance("a", "b");
+                break;
+            case 1:
+                selectedFragment = MeetingFragment.newInstance("a", "b");
+                break;
+        }
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
+        transaction.replace(R.id.frameLayout, selectedFragment);
+        transaction.commit();
     }
+
+    public void onClockinInteraction(Uri uri){}
+    public void onMeetingInteraction(Uri uri){}
 }
