@@ -8,4 +8,16 @@
     <string name="title_home">Home</string>
     <string name="title_meeting_rooms">Meeting Rooms</string>
     <string name="title_clock_in">In/Out</string>
+
+    <!-- ClockinFragmentStrings -->
+    <string name="greeting_am">Good morning! You are currently</string>
+    <string name="greeting_noon">Good day! You are currently</string>
+    <string name="greeting_after">Good afternoon! You are currently</string>
+    <string name="greeting_pm">Good evening! You are currently</string>
+
+    <string name="label_clockin">CLOCK IN</string>
+    <string name="label_clockout">CLOCK OUT</string>
+    <string name="label_undo">Undo?</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
