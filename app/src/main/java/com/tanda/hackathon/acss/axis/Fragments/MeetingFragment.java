@@ -7,6 +7,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.tanda.hackathon.acss.axis.R;
 
@@ -71,6 +73,16 @@ public class MeetingFragment extends Fragment {
         super.onDetach();
         mListener = null;
     }
+
+    public void onStart() {
+        super.onStart();
+        String[] items = {"AAA", "BBB", "CCC", "DDD", "EEE"};
+        ArrayAdapter<String> itemsAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, items);
+        ListView listView = (ListView) getActivity().findViewById(R.id.roomsList);
+        listView.setAdapter(itemsAdapter);
+    }
+
+
 
     public interface OnMeetingListener {
         // TODO: Update argument type and name
